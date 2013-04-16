@@ -46,7 +46,7 @@ def run_command(batch):
     else:
         user = "root"
         if "as-builder" in batch.command_flags:
-            user = "builder"
+            user = None
         return chroot.run(command, logfile = batch.logfile, user = user)
 
 def build_all(r, build_fnc):
