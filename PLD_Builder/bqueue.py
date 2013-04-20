@@ -43,6 +43,7 @@ class B_Queue:
     <link rel="Shortcut Icon" href="http://www.pld-linux.org/favicon.ico"/>
         <title>PLD builder queue</title>
         <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="style.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="script.js"></script>
     </head>
 <body>\n"""
