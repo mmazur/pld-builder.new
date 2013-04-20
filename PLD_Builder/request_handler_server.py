@@ -53,116 +53,33 @@ class MyHandler(BaseHTTPRequestHandler):
 			pass
 
 def write_css():
+	css_src = os.path.join(os.path.dirname(__file__), 'style.css')
 	css_file = path.www_dir + "/style.css"
 	# skip if file exists and code is not newer
-	if os.path.exists(css_file) and os.stat(__file__).st_mtime < os.stat(css_file).st_mtime:
+	if os.path.exists(css_file) and os.stat(css_src).st_mtime < os.stat(css_file).st_mtime:
 		return
 
-	# css from www.pld-linux.org wiki theme, using css usage firebug plugin to cleanup
-	css = """
-html {
-	background-color: white;
-	color: #5e5e5e;
-	font-family: Tahoma, Arial, Lucida Grande, sans-serif;
-	font-size: 0.75em;
-	line-height: 1.25em;
-}
-
-a {
-	text-decoration: underline;
-	color: #006;
-}
-
-a:hover {
-	color: #006;
-}
-
-pre {
-	background: #FFF8EB;
-	border: 1pt solid #FFE2AB;
-	font-family: courier, monospace;
-	padding: 0.5em;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-}
-
-@media screen, projection {
-	html {
-		background-color: #f3efe3;
-	}
-
-	body {
-		position: relative;
-	}
-
-	div {
-		background-color: white;
-		margin: 10px 0px;
-		padding: 2px;
-	}
-	div > a {
-		font-weight: bold;
-		color: #5e5e5e;
-	}
-	div > a:hover {
-		color: #5e5e5e;
-	}
-	div.upgrade {
-		background-color: #e4f1cf;
-	}
-	div:target {
-		background-color: #ffffcc;
-		color: black;
-	}
-}
-@media print {
-	a {
-		background-color: inherit;
-		color: inherit;
-	}
-}
-
-@media projection {
-	html { line-height: 1.8em; }
-	body, b, a, p { font-size: 22pt; }
-}
-"""
 	old_umask = os.umask(0022)
+	r = open(css_src, 'r')
 	f = open(css_file, "w")
-	f.write(css)
+	f.write(r.read())
 	f.close()
+	r.close()
 	os.umask(old_umask)
 
 def write_js():
-	js_file = path.www_dir + "/script.js"
+	js_src = os.path.join(os.path.dirname(__file__), 'script.js')
+	js_file = path.www_dir + '/script.js'
 	# skip if file exists and code is not newer
-	if os.path.exists(js_file) and os.stat(__file__).st_mtime < os.stat(js_file).st_mtime:
+	if os.path.exists(js_file) and os.stat(js_src).st_mtime < os.stat(js_file).st_mtime:
 		return
 
-	js = """
-// update date stamps to reflect viewers timezone
-function update_tz(t) {
-	var el, off, dt,
-		collection = document.getElementsByTagName('span');
-	for (off in collection) {
-		el = collection[off];
-		if (el.id == 'tz') {
-			dt = new Date(el.innerHTML).toString();
-			// strip timezone name, it is usually wrong when not initialized
-			// from TZ env, but reverse calculated from os data
-			dt = dt.replace(/\s+\(.+\)/, "");
-			// strip "GMT"
-			dt = dt.replace(/GMT/, "");
-			el.innerHTML = dt;
-		}
-	}
-}
-window.onload = update_tz;
-"""
 	old_umask = os.umask(0022)
-	f = open(js_file, "w")
-	f.write(js)
+	r = open(js_src, 'r')
+	f = open(js_file, 'w')
+	f.write(r.read())
 	f.close()
+	r.close()
 	os.umask(old_umask)
 
 def main():

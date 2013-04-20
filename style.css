@@ -1,0 +1,69 @@
+/*
+ * css from www.pld-linux.org (moinmoin) wiki theme, using css usage firebug plugin to cleanup
+ */
+html {
+	background-color: white;
+	color: #5e5e5e;
+	font-family: Tahoma, Arial, Lucida Grande, sans-serif;
+	font-size: 0.75em;
+	line-height: 1.25em;
+}
+
+a {
+	text-decoration: underline;
+	color: #006;
+}
+
+a:hover {
+	color: #006;
+}
+
+pre {
+	background: #FFF8EB;
+	border: 1pt solid #FFE2AB;
+	font-family: courier, monospace;
+	padding: 0.5em;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+@media screen, projection {
+	html {
+		background-color: #f3efe3;
+	}
+
+	body {
+		position: relative;
+	}
+
+	div {
+		background-color: white;
+		margin: 10px 0px;
+		padding: 2px;
+	}
+	div > a {
+		font-weight: bold;
+		color: #5e5e5e;
+	}
+	div > a:hover {
+		color: #5e5e5e;
+	}
+	div.upgrade {
+		background-color: #e4f1cf;
+	}
+	div:target {
+		background-color: #ffffcc;
+		color: black;
+	}
+}
+@media print {
+	a {
+		background-color: inherit;
+		color: inherit;
+	}
+}
+
+@media projection {
+	html { line-height: 1.8em; }
+	body, b, a, p { font-size: 22pt; }
+}
