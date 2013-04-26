@@ -36,7 +36,7 @@ pre {
 		position: relative;
 	}
 
-	div {
+	div.request {
 		background-color: white;
 		margin: 10px 0px;
 		padding: 2px;
@@ -55,11 +55,30 @@ pre {
 		background-color: #ffffcc;
 		color: black;
 	}
+
+	#header {
+		background-color: white;
+		border: 1px solid black;
+		padding: 0.5em;
+		position: fixed;
+		z-index: 100;
+	}
+
+	#content {
+		clear: both;
+		margin-top: 5em;
+		overflow: auto;
+		position: absolute;
+		width: 100%;
+	}
 }
 @media print {
 	a {
 		background-color: inherit;
 		color: inherit;
+	}
+	#header {
+		display: none;
 	}
 }
 

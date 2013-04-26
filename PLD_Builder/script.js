@@ -26,8 +26,11 @@ jQuery(function($) {
 			}
 		});
 
-		var $filter = $('<div id=requesters-filter>Filter by requesters:<br></div>');
-		$('body').prepend($filter);
+		var $filter = $('#requesters-filter');
+		if ($filter.length == 0) {
+			$filter = $('<div id=requesters-filter>Filter by requesters:<br></div>');
+			$('body').prepend($filter);
+		}
 		requesters.forEach(function(r) {
 			var $button = $('<button class=request-filter>'+ r + '</button>');
 			$button.on('click', function() {

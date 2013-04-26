@@ -46,13 +46,18 @@ class B_Queue:
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="script.js"></script>
     </head>
-<body>\n"""
+<body>
+<div id="header">
+    <div id="requesters-filter">Filter by requesters:<br></div>
+</div>
+<div id="content">
+"""
         )
         self.requests.reverse()
         for r in self.requests:
             r.dump_html(f)
         self.requests.reverse()
-        f.write("</body></html>\n")
+        f.write("</div></body></html>\n")
         f.flush()
         os.fsync(f.fileno())
         f.close()
