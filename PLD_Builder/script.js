@@ -18,7 +18,7 @@ jQuery(function($) {
 
 	// draw filter for requesters
 	function filter_requesters() {
-		var requesters = [];
+		var requesters = ['everyone'];
 		$('div b.requester').each(function(i, d) {
 			var requester = $(d).text();
 			if (!~requesters.indexOf(requester)) {
@@ -37,7 +37,7 @@ jQuery(function($) {
 				$('div#requesters-filter button').removeAttr('disabled');
 				$('div.request').filter(function(i, d) {
 					var c = $(d).find('b.requester').text();
-					if (c == r) {
+					if (c == r || r == 'everyone') {
 						$(d).show();
 						$button.attr('disabled', 'disabled');
 					} else {

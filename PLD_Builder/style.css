@@ -61,12 +61,13 @@ pre {
 		border: 1px solid black;
 		padding: 0.5em;
 		position: fixed;
+		right: 0px;
+		bottom: 0px;
 		z-index: 100;
 	}
 
 	#content {
 		clear: both;
-		margin-top: 5em;
 		overflow: auto;
 		position: absolute;
 		width: 100%;
