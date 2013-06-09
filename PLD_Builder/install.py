@@ -12,7 +12,7 @@ hold = [
     'dev',
     'poldek',
     'rpm-build',
-    'pdksh',
+    'mksh',
     'coreutils'
 ]
 
