@@ -106,12 +106,7 @@ def fetch_src(r, b):
                 b.log_line(msg)
                 return False
         except urllib2.URLError, error:
-            # see errno.h
-            try:
-                errno = error.errno
-            except AttributeError:
-                # python 2.4
-                errno = error.reason[0]
+            errno = error.reason.errno
 
             if errno in [-3, 60, 61, 110, 111]:
                 b.log_line("unable to connect to %s... trying again" % (src_url))
