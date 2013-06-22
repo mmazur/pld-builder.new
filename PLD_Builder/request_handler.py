@@ -16,6 +16,7 @@ import util
 import wrap
 import status
 from acl import acl
+from blacklist import blacklist
 from lock import lock
 from bqueue import B_Queue
 from config import config, init_conf
@@ -126,6 +127,14 @@ def handle_group(r, user):
             if not "test-build" in r.flags and not user.can_do("ready", bld, batch.branch):
                    fail_mail("user %s is not allowed to send ready builds (ready:%s:%s)" \
                         % (user.get_login(), bld, batch.branch))
+                   lockf.close()
+                   return
+
+            pkg = batch.spec
+            if pkg.endswith(".spec"):
+                pkg = pkg[:-5]
+            if not "test-build" in r.flags and blacklist.package(pkg):
+                   fail_mail("package '%s' is blacklisted, only test-builds allowed" % pkg)
                    lockf.close()
                    return
 
