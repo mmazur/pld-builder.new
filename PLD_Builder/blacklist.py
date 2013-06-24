@@ -26,20 +26,20 @@ class Blacklist_File:
 
     def reload(self):
         self.blacklist_file_mtime = os.stat(path.blacklist_file)[stat.ST_MTIME]
-        self.blacklist = {}
+        self.blacklist = set()
         status.push("reading package-blacklist")
         with open(path.blacklist_file) as f:
             for l in f:
                 p = l.rstrip()
                 if re.match(r"^#.*", p):
                     continue
-                self.blacklist[p] = 1
-                log.notice("blacklist added: %s (%d)" % (l, self.blacklist.has_key(p)))
+                self.blacklist.add(p)
+                log.notice("blacklist added: %s" % l)
         status.pop()
 
     def package(self, p):
 #       log.notice("blacklist check: %s (%d)" % (p, self.blacklist.has_key(p)))
-        if self.blacklist.has_key(p):
+        if p in self.blacklist:
             return True
         return False
 
