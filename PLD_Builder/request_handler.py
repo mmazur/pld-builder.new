@@ -213,6 +213,7 @@ def handle_request(req, filename = None):
 
 def handle_request_main(req, filename = None):
     acl.try_reload()
+    blacklist.try_reload()
     init_conf("src")
     status.push("handling email request")
     ret = handle_request(req, filename = filename)
