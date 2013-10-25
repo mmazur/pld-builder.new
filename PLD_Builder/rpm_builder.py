@@ -114,6 +114,14 @@ def fetch_src(r, b):
                 b.log_line("unable to connect to %s... trying again" % (src_url))
                 continue
             else:
+                try:
+                    print "error.errno: %s" % str(error.errno)
+                except Exception, e:
+                    print "error.errno: exception %s" % e
+                try:
+                    print "error.reason %s" % str(error.reason)
+                except Exception, e:
+                    print "error.reason exception %s" % e
                 raise
 
     o = chroot.popen("cat > %s" % b.src_rpm, mode = "w")
