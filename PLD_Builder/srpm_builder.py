@@ -98,7 +98,7 @@ def build_srpm(r, b):
     status.push("building %s" % b.spec)
 
     b.src_rpm = ""
-    builder_opts = "-nu -nm --nodeps --http"
+    builder_opts = "-nu -nm --nodeps --http --define '_pld_builder 1'"
     if ("test-build" in r.flags):
                     tag_test=""
     else:
