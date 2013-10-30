@@ -376,6 +376,8 @@ def main_for(builder):
     else:
         # be able to avoid locking with very low priority
         if req.priority > -1000:
+            # don't kill server
+            check_load()
             # allow only one build in given builder at once
             if not lock.lock("building-high-priority-rpm-for-%s" % config.builder, non_block = 1):
                 return
