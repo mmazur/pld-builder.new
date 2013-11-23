@@ -2,7 +2,7 @@ new bin builder setup
 
 packages and chroot
 ~~~~~~~~~~~~~~~~~~~
-1. install pld-builder from th repoeistory on target host
+1. install pld-builder from th repoistory on target host
 
 2. create chroot /srv/chroot
 (you can symlink to real dest for the sake of copy-paste from here)
