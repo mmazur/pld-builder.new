@@ -47,6 +47,7 @@ gpg keys
 1. import src builder key to bin builder so it can download queue.gz
 
 src-builder$ gpg --export builder-th-src@pld-linux.org --armor > th-src.asc
+bin-builder$ su - builder
 bin-builder$ gpg --import < th-src.asc
 
 2. generate new key for bin builder and import it to src builder so it can
