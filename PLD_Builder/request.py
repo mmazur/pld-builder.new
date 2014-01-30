@@ -262,9 +262,9 @@ class Batch:
             desc = "SH: <pre>%s</pre> flags: [%s]" % (self.command, ' '.join(self.command_flags))
         else:
             package_url = "http://git.pld-linux.org/gitweb.cgi?p=packages/%(package)s.git;f=%(spec)s;h=%(branch)s;a=shortlog" % {
-                'spec': self.spec,
-                'branch': self.branch,
-                'package': self.spec[:-5],
+                'spec': urllib.quote(self.spec),
+                'branch': urllib.quote(self.branch),
+                'package': urllib.quote(self.spec[:-5]),
             }
             desc = "%(src_rpm)s (<a href=\"%(package_url)s\">%(spec)s -r %(branch)s</a>%(rpmopts)s)" % {
                 'src_rpm': self.src_rpm,
