@@ -28,13 +28,14 @@ class Blacklist_File:
         self.blacklist_file_mtime = os.stat(path.blacklist_file)[stat.ST_MTIME]
         self.blacklist = set()
         status.push("reading package-blacklist")
-        with open(path.blacklist_file) as f:
-            for l in f:
-                p = l.rstrip()
-                if re.match(r"^#.*", p):
-                    continue
-                self.blacklist.add(p)
-                log.notice("blacklist added: %s" % l)
+        f = open(path.blacklist_file)
+        for l in f:
+            p = l.rstrip()
+            if re.match(r"^#.*", p):
+                continue
+            self.blacklist.add(p)
+            log.notice("blacklist added: %s" % l)
+        f.close()
         status.pop()
 
     def package(self, p):
