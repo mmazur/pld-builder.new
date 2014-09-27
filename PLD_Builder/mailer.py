@@ -32,6 +32,10 @@ class Message:
         if subject != None:
             self.set_header("Subject", subject)
 
+    def remove_header(self, n):
+        if n in self.headers:
+          del self.headers[n]
+
     def write_line(self, l):
         self.body.write(recode("%s\n" % l))
 
