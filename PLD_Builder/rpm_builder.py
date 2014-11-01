@@ -227,7 +227,7 @@ def build_rpm(r, b):
                 if r.max_jobs > 0:
                     max_jobs = max(min(config.max_jobs, r.max_jobs), 1)
                 cmd = "set -ex; : build-id: %(r_id)s; TMPDIR=%(tmpdir)s exec nice -n %(nice)s " \
-                    "rpmbuild -bb --define '_smp_mflags -j%(max_jobs)d' --define '_pld_builder 1' %(rpmdefs)s %(topdir)s/%(spec)s" % {
+                    "rpmbuild -bb --define '_smp_mflags -j%(max_jobs)d' --define '__make /usr/bin/make -Otarget %{?_smp_mflags}' --define '_pld_builder 1' %(rpmdefs)s %(topdir)s/%(spec)s" % {
                     'r_id' : r.id,
                     'tmpdir': tmpdir,
                     'nice' : config.nice,
