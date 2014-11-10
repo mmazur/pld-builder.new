@@ -65,8 +65,7 @@ rpm_cache_dir = /spools/ready
 tag_prefixes = auto-th-
 
 [request-server]
-port = 1234
-ssl = False
+ssl_port = 1235
 ssl_key = somewhere/srcbuilder.key
 ssl_cert = somewhere/srcbuilder.crt
 ssl_cacert = somewhere/intermediateca.crt

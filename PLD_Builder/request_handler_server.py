@@ -83,7 +83,7 @@ def write_js():
 	r.close()
 	os.umask(old_umask)
 
-def main():
+def main(srv_ssl=False):
 	write_css();
 	write_js();
 	socket.setdefaulttimeout(30)
@@ -91,7 +91,8 @@ def main():
 		init_conf()
 		host = ""
 		port = config.request_handler_server_port
-		srv_ssl = config.request_handler_server_ssl
+		if srv_ssl:
+			port = config.request_handler_server_ssl_port
 
 		try:
 			server = HTTPServer((host, port), MyHandler)
@@ -113,5 +114,9 @@ def main():
 		server.socket.close()
 
 if __name__ == '__main__':
-	main()
+	srv_ssl = False
+	if len(sys.argv) == 2 and sys.argv[1] == "ssl":
+		srv_ssl = True
+
+	main(srv_ssl)
 
