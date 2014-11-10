@@ -23,6 +23,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
 	def do_POST(self):
 		global rootnode
+		filename = "(unknown)"
 		try:
 			length = int(self.headers.getheader('content-length'))
 			ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
