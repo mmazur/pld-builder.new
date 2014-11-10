@@ -100,9 +100,9 @@ def build_srpm(r, b):
     b.src_rpm = ""
     builder_opts = "-nu -nm --nodeps --http --define \'_pld_builder 1\'"
     if ("test-build" in r.flags):
-                    tag_test=""
+        tag_test=""
     else:
-                    tag_test=" -Tp %s -tt" % (config.tag_prefixes[0],)
+        tag_test=" -Tp %s -tt" % (config.tag_prefixes[0],)
     cmd = ("cd rpm/packages; nice -n %s ./builder %s -bs %s -r %s %s %s %s %s 2>&1" %
              (config.nice, builder_opts, b.bconds_string(), b.branch,
               tag_test, b.kernel_string(), b.defines_string(), b.spec))

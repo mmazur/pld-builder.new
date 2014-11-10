@@ -28,4 +28,3 @@ def run_loop(fnc, secs = 5, max = 60):
         took = time.time() - last
         if took < secs:
             time.sleep(secs - took)
-

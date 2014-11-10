@@ -34,7 +34,7 @@ class Message:
 
     def remove_header(self, n):
         if n in self.headers:
-          del self.headers[n]
+            del self.headers[n]
 
     def write_line(self, l):
         self.body.write(recode("%s\n" % l))

@@ -62,7 +62,7 @@ def handle_group(r, user):
         if (user.change_requester and r.requester):
             user = acl.user_by_login(r.requester)
     except KeyError:
-            r.requester += '/' + user.get_login()
+        r.requester += '/' + user.get_login()
     else:
         r.requester = user.get_login()
         r.requester_email = user.mail_to()
@@ -125,18 +125,18 @@ def handle_group(r, user):
                     lockf.close()
                     return
             if not "test-build" in r.flags and not user.can_do("ready", bld, batch.branch):
-                   fail_mail("user %s is not allowed to send ready builds (ready:%s:%s)" \
-                        % (user.get_login(), bld, batch.branch))
-                   lockf.close()
-                   return
+                fail_mail("user %s is not allowed to send ready builds (ready:%s:%s)" \
+                     % (user.get_login(), bld, batch.branch))
+                lockf.close()
+                return
 
             pkg = batch.spec
             if pkg.endswith(".spec"):
                 pkg = pkg[:-5]
             if not "test-build" in r.flags and blacklist.package(pkg):
-                   fail_mail("package '%s' is blacklisted, only test-builds allowed" % pkg)
-                   lockf.close()
-                   return
+                fail_mail("package '%s' is blacklisted, only test-builds allowed" % pkg)
+                lockf.close()
+                return
 
     r.priority = user.check_priority(r.priority,config.builder)
     r.time = time.time()
