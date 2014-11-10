@@ -37,8 +37,10 @@ class Builder_Conf:
 
     def read(self, builder):
         p = ConfigParser.ConfigParser()
-        def get(o, d = None):
-            if p.has_option(builder, o):
+        def get(o, d = None, sec=None):
+            if p.has_option(sec, o):
+                return string.strip(p.get(sec, o))
+            elif p.has_option(builder, o):
                 return string.strip(p.get(builder, o))
             elif p.has_option("all", o):
                 return string.strip(p.get("all", o))
@@ -70,7 +72,12 @@ class Builder_Conf:
         self.max_keep_time = int(get("max_keep_time", 168))*60*60
         self.bot_email = get("bot_email", "")
         self.control_url = get("control_url")
-        self.request_handler_server_port = int(get("request_handler_server_port", 1234))
+        self.request_handler_server_port = int(get("port", d=1234, sec="request-server"))
+        self.request_handler_server_ssl = get("ssl", d="False", sec="request-server")
+        if self.request_handler_server_ssl:
+            self.request_handler_server_ssl_key = get("ssl_key", d="", sec="request-server")
+            self.request_handler_server_ssl_cert = get("ssl_cert", d="", sec="request-server")
+            self.request_handler_server_ssl_cacert = get("ssl_cacert", d="", sec="request-server")
         self.builder_list = get("builder_list", "")
         self.gen_upinfo = get("gen_upinfo", "yes")
         if self.gen_upinfo == 'no':

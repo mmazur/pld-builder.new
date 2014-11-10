@@ -5,6 +5,7 @@ import string
 import cgi
 import time
 import log
+import ssl
 import sys
 import traceback
 import os
@@ -90,15 +91,22 @@ def main():
 		init_conf()
 		host = ""
 		port = config.request_handler_server_port
+		srv_ssl = config.request_handler_server_ssl
 
 		try:
 			server = HTTPServer((host, port), MyHandler)
+			if srv_ssl:
+				server.socket = ssl.wrap_socket (server.socket,
+						keyfile = config.request_handler_server_ssl_key,
+						certfile = config.request_handler_server_ssl_cert,
+						ca_certs = config.request_handler_server_ssl_cacert,
+						server_side=True)
 		except Exception, e:
-			log.notice("request_handler_server: can't start server on [%s:%d]: %s" % (host, port, e))
-			print >> sys.stderr, "ERROR: Can't start server on [%s:%d]: %s" % (host, port, e)
+			log.notice("request_handler_server: can't start server on [%s:%d], ssl=%s: %s" % (host, port, str(srv_ssl), e))
+			print >> sys.stderr, "ERROR: Can't start server on [%s:%d], ssl=%s: %s" % (host, port, str(srv_ssl), e)
 			sys.exit(1)
 
-		log.notice('request_handler_server: started on [%s:%d]...' % (host, port))
+		log.notice('request_handler_server: started on [%s:%d], ssl=%s...' % (host, port, str(srv_ssl)))
 		server.serve_forever()
 	except KeyboardInterrupt:
 		log.notice('request_handler_server: ^C received, shutting down server')

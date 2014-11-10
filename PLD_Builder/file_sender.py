@@ -119,7 +119,7 @@ def send_file(src, target):
         m = re.match('ssh\+rsync://([^@:]+@[^/:]+)(:|)(.*)', target)
         if m:
             return not rsync_ssh_file(src, m.group(1) + ":" + m.group(3))
-        m = re.match('http://.*', target)
+        m = re.match('(http|https)://.*', target)
         if m:
             return not post_file(src, target)
         log.alert("unsupported protocol: %s" % target)
