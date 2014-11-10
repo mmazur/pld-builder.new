@@ -23,11 +23,10 @@ class MyHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         global rootnode
-        filename = "(unknown)"
         try:
             length = int(self.headers.getheader('content-length'))
             filename = self.headers.getheader('x-filename')
-            if not length or not filename:
+            if not length:
                 log.error("request_handler_server: [%s]: 401 Unauthorized" % self.client_address[0])
                 self.send_error(401)
                 self.end_headers()
