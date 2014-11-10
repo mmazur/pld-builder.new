@@ -78,7 +78,6 @@ class Builder_Conf:
             self.request_handler_server_ssl_port = int(get("port", d=1235, sec="request-server"))
             self.request_handler_server_ssl_key = get("ssl_key", d="", sec="request-server")
             self.request_handler_server_ssl_cert = get("ssl_cert", d="", sec="request-server")
-            self.request_handler_server_ssl_cacert = get("ssl_cacert", d="", sec="request-server")
         self.builder_list = get("builder_list", "")
         self.gen_upinfo = get("gen_upinfo", "yes")
         if self.gen_upinfo == 'no':

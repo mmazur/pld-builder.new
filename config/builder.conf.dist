@@ -68,7 +68,6 @@ tag_prefixes = auto-th-
 ssl_port = 1235
 ssl_key = somewhere/srcbuilder.key
 ssl_cert = somewhere/srcbuilder.crt
-ssl_cacert = somewhere/intermediateca.crt
 
 # ------ Configs for particular builders:
 

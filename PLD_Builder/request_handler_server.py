@@ -100,7 +100,7 @@ def main(srv_ssl=False):
 				server.socket = ssl.wrap_socket (server.socket,
 						keyfile = config.request_handler_server_ssl_key,
 						certfile = config.request_handler_server_ssl_cert,
-						ca_certs = config.request_handler_server_ssl_cacert,
+						ca_certs = "/etc/certs/ca-certificates.crt",
 						server_side=True)
 		except Exception, e:
 			log.notice("request_handler_server: can't start server on [%s:%d], ssl=%s: %s" % (host, port, str(srv_ssl), e))
