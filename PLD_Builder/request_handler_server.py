@@ -26,18 +26,14 @@ class MyHandler(BaseHTTPRequestHandler):
 		filename = "(unknown)"
 		try:
 			length = int(self.headers.getheader('content-length'))
-			raw_ctype = ctype = self.headers.getheader('content-type')
-			if raw_ctype:
-				ctype, pdict = cgi.parse_header(raw_ctype)
-			if not raw_ctype or ctype != 'application/x-www-form-urlencoded':
+			filename = self.headers.getheader('x-filename')
+			if not length or not filename:
 				log.error("request_handler_server: [%s]: 401 Unauthorized" % self.client_address[0])
 				self.send_error(401)
 				self.end_headers()
 				return
 
 			query = self.rfile.read(length)
-
-			filename = self.headers.getheader('x-filename')
 
 			if not request_handler.handle_request_main(query, filename = filename):
 				error = log.last_log();
