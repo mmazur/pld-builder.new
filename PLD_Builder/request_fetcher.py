@@ -18,6 +18,7 @@ import gpg
 import request
 import loop
 import socket
+import struct
 from acl import acl
 from bqueue import B_Queue
 from config import config, init_conf
@@ -74,7 +75,12 @@ def fetch_queue(control_url):
     f.close()
     sio.seek(0)
     f = gzip.GzipFile(fileobj = sio)
-    (signers, body) = gpg.verify_sig(f.read())
+    try:
+        fdata = f.read()
+    except struct.error, e:
+        log.alert("corrupted fetched queue.gz file")
+        sys.exit(1)
+    (signers, body) = gpg.verify_sig(fdata)
     u = acl.user_by_email(signers)
     if u == None:
         log.alert("queue.gz not signed with signature of valid user: %s" % signers)
