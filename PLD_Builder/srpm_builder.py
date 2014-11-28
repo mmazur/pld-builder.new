@@ -126,8 +126,8 @@ def build_srpm(r, b):
     if res == 0 and not "test-build" in r.flags:
         for pref in config.tag_prefixes:
             util.append_to(b.logfile, "Tagging with prefix: %s" % pref)
-            res = chroot.run("cd rpm/packages; ./builder -r %s -Tp %s -Tv %s" % \
-                        (b.branch, pref, b.spec), logfile = b.logfile)
+            res = chroot.run("cd rpm/packages; ./builder -bs %s -r %s -Tp %s -Tv %s %s" % \
+                        (b.bconds_string(), b.branch, pref, b.defines_string(), b.spec), logfile = b.logfile)
     if res == 0:
         transfer_file(r, b)
 
