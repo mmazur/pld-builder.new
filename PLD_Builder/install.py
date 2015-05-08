@@ -161,7 +161,7 @@ def install_br(r, b):
     chroot.run("poldek --up --upa", user = "root", logfile = b.logfile)
     # check conflicts in BRed packages
     b.log_line("checking conflicting packages in BRed packages")
-    f = chroot.popen("poldek --test --test --noask --caplookup -Q -v --upgrade %s" % br, user = "root")
+    f = chroot.popen("poldek --test --test --noask --caplookup -Q -v --upgrade %s %s" % (b.ignores(), br), user = "root")
     # phonon-devel-4.3.1-1.i686 conflicts with qt4-phonon-devel-4.5.0-6.i686
     # jdbc-stdext >= 2.0 is required by installed java-struts-1.3.10-1.noarch
     # jmx is needed by (installed) java-commons-modeler-2.0-1.noarch
