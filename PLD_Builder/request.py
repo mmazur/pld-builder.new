@@ -340,6 +340,50 @@ class Batch:
             "--define '_builddir %{_topdir}/BUILD' "
         return rpmdefs + rpmopts
 
+    def php_ignores(self):
+        # transform php package name (52) to version (5.2)
+        def php_name_to_ver(v):
+            return '.'.join(list(v))
+
+        # transform php version (5.2) to package name (52)
+        def php_ver_to_name(v):
+            return v.replace('.', '')
+
+        # available php versions in distro
+        php_versions = ['5.2', '5.3', '5.4', '5.5', '5.6']
+
+        # current version if -D php_suffix is present
+        php_version = php_name_to_ver(defines['php_suffix'])
+
+        # remove current php version
+        php_versions.remove(php_version)
+
+        # map them to poldek ignores
+        # always ignore hhvm
+        res = ['hhvm']
+        for v in map(php_ver_to_name, php_versions):
+            res.append("php%s-*" % v)
+
+        return res
+
+    # build ignore package list
+    # currently only php ignore is filled based on build context
+    def ignore_list(self):
+        ignores = []
+
+        # add php version based ignores
+        if self.defines.has_key('php_suffix'):
+            ignores.extend(self.php_ignores())
+
+        # return empty string if the list is empty
+        if len(ignores) == 0:
+            return ""
+
+        def add_ignore(s):
+            return "--ignore=%s" % s
+
+        return " ".join(map(add_ignore, ignores))
+
     def kernel_string(self):
         r = ""
         if self.kernel != "":

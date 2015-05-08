@@ -191,7 +191,7 @@ def install_br(r, b):
     br = string.strip(nbr)
 
     b.log_line("installing BR: %s" % br)
-    res = chroot.run("poldek --noask --caplookup -Q -v --upgrade %s" % br,
+    res = chroot.run("set -x; poldek --noask --caplookup -Q -v --upgrade %s %s" % (b.ignores(), br),
             user = "root",
             logfile = b.logfile)
     if res != 0:
