@@ -353,7 +353,7 @@ class Batch:
         php_versions = ['5.2', '5.3', '5.4', '5.5', '5.6']
 
         # current version if -D php_suffix is present
-        php_version = php_name_to_ver(defines['php_suffix'])
+        php_version = php_name_to_ver(self.defines['php_suffix'])
 
         # remove current php version
         php_versions.remove(php_version)
