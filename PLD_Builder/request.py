@@ -368,7 +368,7 @@ class Batch:
 
     # build ignore package list
     # currently only php ignore is filled based on build context
-    def ignore_list(self):
+    def ignores(self):
         ignores = []
 
         # add php version based ignores
