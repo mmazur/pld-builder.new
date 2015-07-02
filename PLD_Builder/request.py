@@ -122,10 +122,10 @@ class Group:
             'max_jobs': self.max_jobs,
             'flags': string.join(self.flags)
         })
-        f.write("<ul>\n")
+        f.write("<ol>\n")
         for b in self.batches:
             b.dump_html(f, self.id)
-        f.write("</ul>\n")
+        f.write("</ol>\n")
         f.write("</div>\n")
 
     def write_to(self, f):
