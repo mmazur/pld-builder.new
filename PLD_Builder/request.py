@@ -356,7 +356,11 @@ class Batch:
         php_version = php_name_to_ver(self.defines['php_suffix'])
 
         # remove current php version
-        php_versions.remove(php_version)
+        try:
+            php_versions.remove(php_version)
+        except ValueError:
+            log.notice("Attempt to remove inexistent key '%s' from %s" % (php_version, php_versions))
+            pass
 
         # map them to poldek ignores
         # always ignore hhvm
