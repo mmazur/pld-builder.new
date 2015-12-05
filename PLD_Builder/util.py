@@ -52,8 +52,11 @@ def clean_tmp(dir):
 def collect_files(log, basedir = "/home"):
     f = open(log, 'r')
     rx = re.compile(r"^Wrote: (%s.*\.rpm)$" % basedir)
+    proc = re.compile(r"^Processing (files):.*$")
     files = []
-    for l in f.xreadlines():
+    for l in reversed(list(f.xreadlines())):
+        if proc.match(l):
+            break
         m = rx.search(l)
         if m:
             files.append(m.group(1))
