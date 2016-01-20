@@ -1,6 +1,7 @@
 # vi: encoding=utf-8 ts=8 sts=4 sw=4 et
 
 from xml.dom.minidom import *
+from datetime import datetime
 import string
 import time
 import xml.sax.saxutils
@@ -8,6 +9,7 @@ import fnmatch
 import os
 import urllib
 import cgi
+import pytz
 
 import util
 import log
@@ -39,7 +41,6 @@ def escape(s):
 # so we could parse it in javascript
 def tzdate(t):
     # as strftime %z is unofficial, and does not work, need to make it numeric ourselves
-#    date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t))
     date = time.strftime("%a %b %d %Y %H:%M:%S", time.localtime(t))
     # NOTE: the altzone is showing CURRENT timezone, not what the "t" reflects
     # NOTE: when DST is off timezone gets it right, altzone not
@@ -49,6 +50,12 @@ def tzdate(t):
         tzoffset = time.timezone
     tz = '%+05d' % (-tzoffset / 3600 * 100)
     return date + ' ' + tz
+
+# return date in iso8601 format
+def iso8601(ts, timezone='UTC'):
+    tz = pytz.timezone(timezone)
+    dt = datetime.fromtimestamp(ts, tz)
+    return dt.isoformat()
 
 def is_blank(e):
     return e.nodeType == Element.TEXT_NODE and string.strip(e.nodeValue) == ""
@@ -111,12 +118,15 @@ class Group:
     def dump_html(self, f):
         f.write(
             "<div id=\"%(no)d\" class=\"request %(flags)s\">\n"
-            "<a href=\"#%(no)d\">%(no)d</a>. <span id=\"tz\">%(time)s</span> from <b class=requester>%(requester)s</b> "
+            "<a href=\"#%(no)d\">%(no)d</a>. "
+            "<time class=\"timeago\" datetime=\"%(datetime)s\">%(time)s</time> "
+            "from <b class=requester>%(requester)s</b> "
             "<small>%(id)s, prio=%(priority)d, jobs=%(max_jobs)d, %(flags)s</small>\n"
         % {
             'no': self.no,
             'id': '<a href="srpms/%(id)s">%(id)s</a>' % {'id': self.id},
             'time': escape(tzdate(self.time)),
+            'datetime': escape(iso8601(self.time)),
             'requester': escape(self.requester),
             'priority': self.priority,
             'max_jobs': self.max_jobs,

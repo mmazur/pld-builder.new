@@ -44,6 +44,7 @@ class B_Queue:
         <title>PLD builder queue</title>
         <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="style.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min.js"></script>
         <script type="text/javascript" src="script.js"></script>
     </head>
 <body>
