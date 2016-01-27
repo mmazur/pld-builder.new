@@ -10,6 +10,7 @@ import os
 import urllib
 import cgi
 import pytz
+import tempfile
 
 import util
 import log
@@ -183,7 +184,12 @@ class Batch:
 
         self.parse_xml(e)
 
-        self._topdir = '/tmp/B.%s' % self.b_id
+        self.__topdir = None
+
+    def get_topdir(self):
+        if not self.__topdir:
+            self.__topdir = tempfile.mkdtemp(prefix='B.', dir='/tmp')
+        return self.__topdir
 
     def parse_xml(self, e):
         for c in e.childNodes:
@@ -239,7 +245,7 @@ class Batch:
         # it's better to have TMPDIR and BUILD dir on same partition:
         # + /usr/bin/bzip2 -dc /home/services/builder/rpm/packages/kernel/patch-2.6.27.61.bz2
         # patch: **** Can't rename file /tmp/B.a1b1d3/poKWwRlp to drivers/scsi/hosts.c : No such file or directory
-        path = os.path.join(self._topdir, 'BUILD', 'tmp')
+        path = os.path.join(self.get_topdir(), 'BUILD', 'tmp')
         return path
 
     def is_done(self):
@@ -343,7 +349,7 @@ class Batch:
         """
         rpmopts = self.bconds_string() + self.kernel_string() + self.target_string() + self.defines_string()
         rpmdefs = \
-            "--define '_topdir %s' " % self._topdir + \
+            "--define '_topdir %s' " % self.get_topdir() + \
             "--define '_specdir %{_topdir}' "  \
             "--define '_sourcedir %{_specdir}' " \
             "--define '_rpmdir %{_topdir}/RPMS' " \

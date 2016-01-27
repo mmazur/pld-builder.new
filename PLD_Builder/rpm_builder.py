@@ -189,7 +189,7 @@ def build_rpm(r, b):
         rpm -Uhv --nodeps %(rpmdefs)s %(src_rpm)s;
         rm -f %(src_rpm)s;
     """ % {
-        'topdir' : b._topdir,
+        'topdir' : b.get_topdir(),
         'rpmdefs' : b.rpmbuild_opts(),
         'src_rpm' : b.src_rpm
     }, logfile = b.logfile)
@@ -208,7 +208,7 @@ def build_rpm(r, b):
             "rpmbuild -bp --short-circuit --nodeps %(rpmdefs)s --define 'prep exit 0' %(topdir)s/%(spec)s" % {
             'tmpdir': tmpdir,
             'nice' : config.nice,
-            'topdir' : b._topdir,
+            'topdir' : b.get_topdir(),
             'rpmdefs' : b.rpmbuild_opts(),
             'spec': b.spec,
         }
@@ -232,7 +232,7 @@ def build_rpm(r, b):
                     'tmpdir': tmpdir,
                     'nice' : config.nice,
                     'rpmdefs' : b.rpmbuild_opts(),
-                    'topdir' : b._topdir,
+                    'topdir' : b.get_topdir(),
                     'max_jobs' : max_jobs,
                     'spec': b.spec,
                 }
@@ -243,7 +243,7 @@ def build_rpm(r, b):
                 b.log_line("ended at: %s, done in %s" % (time.asctime(), datetime.timedelta(0, end_time - begin_time)))
                 if res:
                     res = "FAIL"
-                files = util.collect_files(b.logfile, basedir = b._topdir)
+                files = util.collect_files(b.logfile, basedir = b.get_topdir())
                 if len(files) > 0:
                     r.chroot_files.extend(files)
                 else:
@@ -261,7 +261,7 @@ def build_rpm(r, b):
         chmod -R u+rwX %(topdir)s/BUILD;
         rm -rf %(topdir)s/{tmp,BUILD}
     """ % {
-        'topdir' : b._topdir,
+        'topdir' : b.get_topdir(),
     }, logfile = b.logfile)
 
     def ll(l):
@@ -296,7 +296,7 @@ def build_rpm(r, b):
         set -ex;
         rm -rf %(topdir)s;
     """ % {
-        'topdir' : b._topdir,
+        'topdir' : b.get_topdir(),
     }, logfile = b.logfile)
 
     def uploadinfo(b):

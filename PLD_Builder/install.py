@@ -105,7 +105,7 @@ def uninstall_self_conflict(b):
         "rpmbuild -bp --nobuild --short-circuit --define 'prep exit 0' %(rpmdefs)s %(topdir)s/%(spec)s 2>&1" % {
         'tmpdir': b.tmpdir(),
         'rpmdefs' : b.rpmbuild_opts(),
-        'topdir' : b._topdir,
+        'topdir' : b.get_topdir(),
         'spec': b.spec,
     })
     # java-sun >= 1.5 conflicts with soprano-2.1.67-1.src
@@ -131,7 +131,7 @@ def install_br(r, b):
         tmpdir = b.tmpdir()
         cmd = "set -e; TMPDIR=%(tmpdir)s rpmbuild --nobuild %(rpmdefs)s %(topdir)s/%(spec)s 2>&1" % {
             'tmpdir': tmpdir,
-            'topdir' : b._topdir,
+            'topdir' : b.get_topdir(),
             'rpmdefs' : b.rpmbuild_opts(),
             'spec': b.spec,
         }
