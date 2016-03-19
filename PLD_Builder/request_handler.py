@@ -21,6 +21,7 @@ from lock import lock
 from bqueue import B_Queue
 from config import config, init_conf
 from mailer import Message
+import messagebus
 
 def check_double_id(id):
     id_nl = id + "\n"
@@ -197,8 +198,10 @@ def handle_request(req, filename = None):
     status.push("request from %s" % user.login)
     r = request.parse_request(body)
     if r.kind == 'group':
+        messagebus.notify(topic="request.group", user=user.login, **r.dump_json())
         handle_group(r, user)
     elif r.kind == 'notification':
+        messagebus.notify(topic="request.notify", user=user.login, **r.dump_json())
         handle_notification(r, user)
     else:
         msg = "%s: don't know how to handle requests of this kind '%s'" \

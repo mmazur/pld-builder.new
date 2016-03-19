@@ -116,6 +116,23 @@ class Group:
             b.dump(f)
         f.write("\n")
 
+    # return structure usable for json encoding
+    def dump_json(self):
+        batches = []
+        for b in self.batches:
+            batches.append(b.dump_json())
+
+        return dict(
+            no=self.no,
+            id=self.id,
+            time=self.time,
+            requester=self.requester,
+            priority=self.priority,
+            max_jobs=self.max_jobs,
+            flags=self.flags,
+            batches=batches,
+        )
+
     def dump_html(self, f):
         f.write(
             "<div id=\"%(no)d\" class=\"request %(flags)s\">\n"
@@ -271,6 +288,30 @@ class Batch:
 
     def is_command(self):
         return self.command != ""
+
+    # return structure usable for json encoding
+    def dump_json(self):
+        return dict(
+            command=self.command,
+            command_flags=self.command_flags,
+
+            spec=self.spec,
+            branch=self.branch,
+            package=self.spec[:-5],
+            src_rpm=self.src_rpm,
+
+            bconds_with=self.bconds_with,
+            bconds_without=self.bconds_without,
+
+            kernel=self.kernel,
+            target=self.target,
+            defines=self.defines,
+
+            builders=self.builders,
+            builders_status=self.builders_status,
+            builders_status_time=self.builders_status_time,
+            builders_status_buildtime=self.builders_status_buildtime,
+        )
 
     def dump_html(self, f, rid):
         f.write("<li>\n")
@@ -510,6 +551,15 @@ class Notification:
                 self.batches_buildtime[id] = buildtime
             else:
                 log.panic("xml: evil notification child (%s)" % c.nodeName)
+
+    # return structure usable for json encoding
+    def dump_json(self):
+        return dict(
+            id=self.group_id,
+            builder=self.builder,
+            batches=self.batches,
+            batches_buildtime=self.batches_buildtime,
+        )
 
     def apply_to(self, q):
         for r in q.requests:

@@ -24,6 +24,7 @@ import notify
 import status
 import build
 import report
+import messagebus
 
 from lock import lock
 from bqueue import B_Queue
@@ -96,6 +97,7 @@ def build_srpm(r, b):
         return "FAIL"
 
     status.push("building %s" % b.spec)
+#    messagebus.notify(topic="build_srpm.start", spec=b.spec, flags=r.flags, batch=b, request=r)
 
     b.src_rpm = ""
     builder_opts = "-nu -nm --nodeps --http --define \'_pld_builder 1\'"
@@ -140,6 +142,8 @@ def build_srpm(r, b):
 
     if res:
         res = "FAIL"
+
+#    messagebus.notify(topic="build_srpm.finish", spec=b.spec)
     return res
 
 def handle_request(r):
