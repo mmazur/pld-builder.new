@@ -2,11 +2,6 @@ PACKAGE		:= pld-builder
 VERSION		:= 0.6
 SNAP		:= $(shell date +%Y%m%d)
 
-# for make dist
-REMOTE		:= ssh://git@git.pld-linux.org/projects/$(MODULE)
-MODULE		:= pld-builder.new
-BRANCH		:= master
-
 all: compile
 
 compile:
@@ -23,4 +18,4 @@ dist: $(PACKAGE)-$(VERSION).$(SNAP).tar.bz2
 	bzip2 -9 $<
 
 %.tar:
-	git archive --prefix=$(patsubst %.tar,%,$@)/ $(BRANCH) -o $@
+	git archive --prefix=$(patsubst %.tar,%,$@)/ HEAD -o $@
