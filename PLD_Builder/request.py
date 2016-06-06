@@ -380,7 +380,7 @@ class Batch:
 
         # map them to poldek ignores
         # always ignore hhvm
-        res = ['hhvm']
+        res = ['hhvm-*']
         for v in map(php_ver_to_name, php_versions):
             res.append("php%s-*" % v)
 
