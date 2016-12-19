@@ -407,7 +407,7 @@ class Batch:
             return v.replace('.', '')
 
         # available php versions in distro
-        php_versions = ['4', '5.2', '5.3', '5.4', '5.5', '5.6', '7.0']
+        php_versions = ['4', '5.2', '5.3', '5.4', '5.5', '5.6', '7.0', '7.1']
 
         # current version if -D php_suffix is present
         php_version = php_name_to_ver(self.defines['php_suffix'])
