@@ -177,6 +177,8 @@ class Group:
         return ok
 
 class Batch:
+    DEFAULT_PHP = '5.3'
+
     def __init__(self, e):
         self.bconds_with = []
         self.bconds_without = []
@@ -397,20 +399,17 @@ class Batch:
             "--define '_builddir %{_topdir}/BUILD' "
         return rpmdefs + rpmopts
 
-    def php_ignores(self):
-        # transform php package name (52) to version (5.2)
-        def php_name_to_ver(v):
-            return '.'.join(list(v))
+    # transform php package name (52) to version (5.2)
+    def php_name_to_ver(v):
+        return '.'.join(list(v))
 
-        # transform php version (5.2) to package name (52)
-        def php_ver_to_name(v):
-            return v.replace('.', '')
+    # transform php version (5.2) to package name (52)
+    def php_ver_to_name(v):
+        return v.replace('.', '')
 
+    def php_ignores(self, php_version):
         # available php versions in distro
         php_versions = ['4', '5.2', '5.3', '5.4', '5.5', '5.6', '7.0', '7.1']
-
-        # current version if -D php_suffix is present
-        php_version = php_name_to_ver(self.defines['php_suffix'])
 
         # remove current php version
         try:
@@ -434,7 +433,12 @@ class Batch:
 
         # add php version based ignores
         if self.defines.has_key('php_suffix'):
-            ignores.extend(self.php_ignores())
+            # current version if -D php_suffix is present
+            php_version = php_name_to_ver(self.defines['php_suffix'])
+        else:
+            php_version = self.DEFAULT_PHP
+
+        ignores.extend(self.php_ignores(php_version))
 
         # return empty string if the list is empty
         if len(ignores) == 0:
