@@ -22,6 +22,7 @@ packages = collections.OrderedDict([
     ('tpm_emulator',                          ['head', '4.9', '4.4', '4.1']),
     ('VirtualBox',                            ['head', '4.9', '4.4', '4.1']),
     ('vpb-driver',                            ['head', '4.9', '4.4', '4.1']),
+    ('WireGuard',                             ['head', '4.9', '4.4', '4.1']),
     ('wl',                                    ['head', '4.9', '4.4', '4.1']),
     ('xorg-driver-video-nvidia',              ['head', '4.9', '4.4', '4.1']),
     ('xorg-driver-video-nvidia-legacy-304xx', ['head', '4.9', '4.4', '4.1']),
