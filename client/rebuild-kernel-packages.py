@@ -177,7 +177,7 @@ def main():
         source_packages = []
         for ver in ['-','-nopae-','-4.9-','-4.4-','-4.1-']:
             source_packages.extend(['kernel%sheaders' % ver, 'kernel%smodule-build' % ver])
-        command = (('%(make_request)s -p 1 -b %(dist)s-src -t -c '
+        command = (('%(make_request)s -b %(dist)s-src -t -c '
                 '"poldek -n %(dist)s -n %(dist)s-ready -n %(dist)s-test --up ; '
                 'poldek -uGv %(source_packages)s"') %
                 {'make_request': args.make_request,
@@ -208,14 +208,14 @@ def main():
         if not set(kernels).symmetric_difference(args.skip):
             continue
         if args.test_build:
-            command = ("%s -p 1 -nd %s -d %s --define 'build_kernels %s' --without userspace %s" %
+            command = ("%s -nd %s -d %s --define 'build_kernels %s' --without userspace %s" %
                     (args.make_request, build_mode, args.dist, ','.join(kernels), spec))
         else:
             tag = get_last_tag(name, spec, branch, dist=args.dist, verbose=args.verbose)
             if not tag:
                 print "Failed getching last autotag for %s!" % pkg
                 continue
-            command = ("%s -p 1 -nd %s -d %s --define 'build_kernels %s' --without userspace %s:%s" %
+            command = ("%s -nd %s -d %s --define 'build_kernels %s' --without userspace %s:%s" %
                     (args.make_request, build_mode, args.dist, ','.join(kernels), spec, tag))
         run_command(shlex.split(command), verbose=args.verbose, quiet=False)
 
@@ -230,14 +230,14 @@ def main():
             if not 'head' in kernels:
                 continue
             if args.test_build:
-                command = ("%s -p 1 -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s" %
+                command = ("%s -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s" %
                         (args.make_request, build_mode, args.dist, spec))
             else:
                 tag = get_last_tag(name, spec, branch, dist=args.dist, verbose=args.verbose)
                 if not tag:
                     print "Failed getching last autotag for %s!" % pkg
                     continue
-                command = ("%s -p 1 -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s:%s" %
+                command = ("%s -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s:%s" %
                         (args.make_request, build_mode, args.dist, spec, tag))
             run_command(shlex.split(command), verbose=args.verbose, quiet=False)
 
