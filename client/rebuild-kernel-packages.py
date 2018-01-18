@@ -91,7 +91,7 @@ def fetch_package(name, spec, branch, verbose=False):
         run_command(["/usr/bin/git", "-C", gitdir, "fetch", "origin"], verbose=verbose)
     else:
         run_command(["/usr/bin/git", "clone", "-o", "origin", "git://git.pld-linux.org/packages/" + name + ".git", gitdir], verbose=verbose)
-        if not os.path.exists("%s/%d" % (gitdir, spec)):
+        if not os.path.exists("%s/%s" % (gitdir, spec)):
             return None
         run_command(["/usr/bin/git", "-C", gitdir, "config", "--local", "--add", "remote.origin.fetch", "refs/notes/*:refs/notes/*"], verbose=verbose)
         run_command(["/usr/bin/git", "-C", gitdir, "remote", "set-url", "--push", "origin", "ssh://git@git.pld-linux.org/packages/" + name], verbose=verbose)
