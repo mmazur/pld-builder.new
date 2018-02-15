@@ -72,8 +72,15 @@ def send_report(r, is_src = False):
     subject += ' '.join((s_failed, s_ok)).strip()
 
     m = mailer.Message()
+    m.set_headers(to = r.requester_email,
+                  cc = config.builder_list,
+                  subject = subject[0:100])
+    if is_src:
+        m.set_header("Message-ID", "<%s@pld.src.builder>" % r.id)
+    else:
+        m.set_header("References", "<%s@pld.src.builder>" % r.id)
+        m.set_header("In-Reply-To", "<%s@pld.src.builder>" % r.id)
 
-    m.write("Request by: %s\n\n" % r.requester_email)
     for b in r.batches:
         if b.build_failed and b.logfile == None:
             info = b.skip_reason
@@ -93,25 +100,6 @@ def send_report(r, is_src = False):
             m.append_log(b.logfile)
             m.write("\n\n")
 
-    m.set_headers(to = r.requester_email,
-                  subject = subject[0:100])
-    if is_src:
-        m.set_header("Message-ID", "<req-%s@pld.src.builder>" % r.id)
-    else:
-        m.set_header("References", "<req-%s@pld.src.builder>" % r.id)
-        m.set_header("In-Reply-To", "<req-%s@pld.src.builder>" % r.id)
-    m.send()
-
-    m.remove_header("To")
-    m.remove_header("Cc")
-    m.set_header("To", config.builder_list)
-    # reset Message-ID
-    m.set_std_headers()
-    if is_src:
-        m.set_header("Message-ID", "<%s@pld.src.builder>" % r.id)
-    else:
-        m.set_header("References", "<%s@pld.src.builder>" % r.id)
-        m.set_header("In-Reply-To", "<%s@pld.src.builder>" % r.id)
     m.send()
 
 def send_cia_report(r, is_src = False):
