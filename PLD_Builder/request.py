@@ -176,6 +176,14 @@ class Group:
                 ok = 0
         return ok
 
+# transform php package name (52) to version (5.2)
+def php_name_to_ver(v):
+    return '.'.join(list(v))
+
+# transform php version (5.2) to package name (52)
+def php_ver_to_name(v):
+    return v.replace('.', '')
+
 class Batch:
     DEFAULT_PHP = '5.3'
 
@@ -398,14 +406,6 @@ class Batch:
             "--define '_rpmdir %{_topdir}/RPMS' " \
             "--define '_builddir %{_topdir}/BUILD' "
         return rpmdefs + rpmopts
-
-    # transform php package name (52) to version (5.2)
-    def php_name_to_ver(v):
-        return '.'.join(list(v))
-
-    # transform php version (5.2) to package name (52)
-    def php_ver_to_name(v):
-        return v.replace('.', '')
 
     def php_ignores(self, php_version):
         # available php versions in distro
