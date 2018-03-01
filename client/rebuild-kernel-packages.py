@@ -9,29 +9,29 @@ import subprocess
 import sys
 
 packages = collections.OrderedDict([
-    ('crash',                                 ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('dahdi-linux',                           ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('ipset',                                 ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('linux-gpib',                            ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('lttng-modules',                         ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('r8168',                                 ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('rtl8812au',                             ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('spl',                                   ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('sysdig',                                ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('tpm_emulator',                          ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('VirtualBox',                            ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('vpb-driver',                            ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('WireGuard',                             ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('wl',                                    ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('xorg-driver-video-nvidia',              ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('xorg-driver-video-nvidia-legacy-304xx', ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('xtables-addons',                        ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('zfs',                                   ['head', '4.14',  '4.9', '4.4', '4.1']),
-    ('lin_tape',                              ['4.14', '4.9', '4.4', '4.1']),
-    ('igb',                                   ['4.4', '4.1']),
-    ('ixgbe',                                 ['4.4', '4.1']),
-    ('nvidiabl',                              ['4.4', '4.1']),
+    ('crash',                                 ['head', '4.14',  '4.9', '4.4']),
+    ('dahdi-linux',                           ['head', '4.14',  '4.9', '4.4']),
+    ('ipset',                                 ['head', '4.14',  '4.9', '4.4']),
+    ('linux-gpib',                            ['head', '4.14',  '4.9', '4.4']),
+    ('lttng-modules',                         ['head', '4.14',  '4.9', '4.4']),
+    ('r8168',                                 ['head', '4.14',  '4.9', '4.4']),
+    ('rtl8812au',                             ['head', '4.14',  '4.9', '4.4']),
+    ('spl',                                   ['head', '4.14',  '4.9', '4.4']),
+    ('sysdig',                                ['head', '4.14',  '4.9', '4.4']),
+    ('tpm_emulator',                          ['head', '4.14',  '4.9', '4.4']),
+    ('VirtualBox',                            ['head', '4.14',  '4.9', '4.4']),
+    ('vpb-driver',                            ['head', '4.14',  '4.9', '4.4']),
+    ('WireGuard',                             ['head', '4.14',  '4.9', '4.4']),
+    ('wl',                                    ['head', '4.14',  '4.9', '4.4']),
+    ('xorg-driver-video-nvidia',              ['head', '4.14',  '4.9', '4.4']),
+    ('xorg-driver-video-nvidia-legacy-304xx', ['head', '4.14',  '4.9', '4.4']),
+    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '4.14',  '4.9', '4.4']),
+    ('xtables-addons',                        ['head', '4.14',  '4.9', '4.4']),
+    ('zfs',                                   ['head', '4.14',  '4.9', '4.4']),
+    ('lin_tape',                              ['4.14', '4.9', '4.4']),
+    ('igb',                                   ['4.4']),
+    ('ixgbe',                                 ['4.4']),
+    ('nvidiabl',                              ['4.4']),
 ])
 
 def get_rpmdir():
@@ -175,7 +175,7 @@ def main():
 
     if not args.noinstall:
         source_packages = []
-        for ver in ['-','-nopae-','-4.14-','-4.9-','-4.4-','-4.1-']:
+        for ver in ['-','-nopae-','-4.14-','-4.9-','-4.4-']:
             source_packages.extend(['kernel%sheaders' % ver, 'kernel%smodule-build' % ver])
         command = (('%(make_request)s -b %(dist)s-src -t -c '
                 '"poldek -n %(dist)s -n %(dist)s-ready -n %(dist)s-test --up ; '
