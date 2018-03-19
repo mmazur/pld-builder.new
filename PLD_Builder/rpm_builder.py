@@ -182,7 +182,7 @@ def build_rpm(r, b):
     b.log_line("started at: %s" % time.asctime())
 
     b.log_line("killing old processes on a builder")
-    chroot.run("/bin/kill --verbose -9 -1"), logfile = b.logfile)
+    chroot.run("/bin/kill --verbose -9 -1", logfile = b.logfile)
 
     fetch_src(r, b)
     b.log_line("installing srpm: %s" % b.src_rpm)
