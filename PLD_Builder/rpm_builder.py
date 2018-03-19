@@ -180,6 +180,10 @@ def build_rpm(r, b):
         return res
 
     b.log_line("started at: %s" % time.asctime())
+
+    b.log_line("killing old processes on a builder")
+    chroot.run("killall -91v"), logfile = b.logfile)
+
     fetch_src(r, b)
     b.log_line("installing srpm: %s" % b.src_rpm)
     res = chroot.run("""
