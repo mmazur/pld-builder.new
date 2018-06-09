@@ -25,6 +25,7 @@ packages = collections.OrderedDict([
     ('WireGuard',                             ['head', '4.14', '4.9', '4.4']),
     ('wl',                                    ['head', '4.14', '4.9', '4.4']),
     ('xorg-driver-video-nvidia',              ['head', '4.14', '4.9', '4.4']),
+    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '4.14', '4.9', '4.4']),
     ('xorg-driver-video-nvidia-legacy-390xx', ['head', '4.14', '4.9', '4.4']),
     ('xtables-addons',                        ['head', '4.14', '4.9', '4.4']),
     ('zfs',                                   ['head', '4.14', '4.9', '4.4']),
