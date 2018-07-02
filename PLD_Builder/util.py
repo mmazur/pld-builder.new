@@ -66,7 +66,7 @@ def collect_files(log, basedir = "/home"):
 def find_last_section(log):
     f = open(log, 'r')
     rx1 = re.compile(r"^Executing\(%(\w+)\).*$")
-    rx2 = re.compile(r"^Processing files:.*$")
+    rx2 = re.compile(r"^Processing (files):.*$")
     last_section = None
     for l in f:
         m = rx1.search(l)
