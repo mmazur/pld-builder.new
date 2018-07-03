@@ -199,6 +199,8 @@ def build_rpm(r, b):
     }, logfile = b.logfile)
     b.files = []
 
+    chroot.run("rm -rf /tmp/B.*", logfile = b.logfile)
+
     tmpdir = b.tmpdir()
     if res:
         b.log_line("error: installing src rpm failed")
