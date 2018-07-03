@@ -184,6 +184,9 @@ def build_rpm(r, b):
     b.log_line("killing old processes on a builder")
     chroot.run("/bin/kill --verbose -9 -1", logfile = b.logfile)
 
+    b.log_line("cleaning up /tmp")
+    chroot.run("rm -rf /tmp/B.*", logfile = b.logfile)
+
     fetch_src(r, b)
     b.log_line("installing srpm: %s" % b.src_rpm)
     res = chroot.run("""
@@ -198,8 +201,6 @@ def build_rpm(r, b):
         'src_rpm' : b.src_rpm
     }, logfile = b.logfile)
     b.files = []
-
-    chroot.run("rm -rf /tmp/B.*", logfile = b.logfile)
 
     tmpdir = b.tmpdir()
     if res:
