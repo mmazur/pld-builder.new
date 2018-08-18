@@ -27,8 +27,9 @@ packages = collections.OrderedDict([
     ('xorg-driver-video-nvidia',              ['head', '4.14', '4.9', '4.4']),
     ('xorg-driver-video-nvidia-legacy-340xx', ['head', '4.14', '4.9', '4.4']),
     ('xorg-driver-video-nvidia-legacy-390xx', ['head', '4.14', '4.9', '4.4']),
-    ('xtables-addons',                        ['head', '4.14', '4.9', '4.4']),
     ('zfs',                                   ['head', '4.14', '4.9', '4.4']),
+    ('xtables-addons',                        ['head']),
+    ('xtables-addons:XTADDONS_2',             ['4.14', '4.9', '4.4']),
     ('igb',                                   ['4.4']),
     ('ixgbe',                                 ['4.4']),
     ('nvidiabl',                              ['4.4']),
@@ -208,6 +209,8 @@ def main():
         if not set(kernels).symmetric_difference(args.skip):
             continue
         if args.test_build:
+            if branch:
+                spec = '%s:%s' % (spec, branch)
             command = ("%s -nd %s -d %s --define 'build_kernels %s' --without userspace %s" %
                     (args.make_request, build_mode, args.dist, ','.join(kernels), spec))
         else:
