@@ -17,7 +17,6 @@ packages = collections.OrderedDict([
     ('lttng-modules',                         ['head', '4.14', '4.9', '4.4']),
     ('r8168',                                 ['head', '4.14', '4.9', '4.4']),
     ('rtl8812au',                             ['head', '4.14', '4.9', '4.4']),
-    ('spl',                                   ['head', '4.14', '4.9', '4.4']),
     ('sysdig',                                ['head', '4.14', '4.9', '4.4']),
     ('tpm_emulator',                          ['head', '4.14', '4.9', '4.4']),
     ('VirtualBox',                            ['head', '4.14', '4.9', '4.4']),
