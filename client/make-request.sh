@@ -123,7 +123,7 @@ print >> sys.stdout, "Request queued via HTTP."
 # htmlspecialchars: escape <, > and &
 hsc() {
 	local input=$1
-	echo -E "$input" | sed -e 's,&,\&amp;,g;s,<,\&lt;,g;s,>,\&gt;,g'
+	printf "%s\n" "$input" | sed -e 's,&,\&amp;,g;s,<,\&lt;,g;s,>,\&gt;,g'
 }
 
 # simple df_fetcher, based on packages/fetchsrc_request
@@ -776,7 +776,7 @@ gen_req() {
 
 	if [ "$command" ]; then
 		bid=$(uuidgen)
-		echo -E >&2 "* Command: $command"
+		printf "%s\n" "* Command: $command" >&2
 		echo "	<batch id='$bid' depends-on=''>"
 		echo "		 <command flags='$command_flags'>"
 		hsc "$command"
@@ -843,7 +843,7 @@ gen_req() {
 		if [ "$no_depend" = yes ]; then
 			depend=
 		fi
-		echo -E >&2 "* Post-Command: $post_command"
+		printf "%s\n" "* Post-Command: $post_command" >&2
 		echo "	<batch id='$bid' depends-on='$depend'>"
 		echo "		 <command flags='$command_flags'>"
 		hsc "$post_command"
