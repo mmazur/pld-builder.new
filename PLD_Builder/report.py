@@ -81,6 +81,8 @@ def send_report(r, is_src = False):
         m.set_header("References", "<%s@pld.src.builder>" % r.id)
         m.set_header("In-Reply-To", "<%s@pld.src.builder>" % r.id)
 
+    m.set_header("X-Entity-Ref-ID", "%s" % r.id)
+
     for b in r.batches:
         if b.build_failed and b.logfile == None:
             info = b.skip_reason
