@@ -12,9 +12,9 @@ hold = [
     'dev',
     'poldek',
     'rpm-build',
-    'pdksh',
     'mksh',
-    'coreutils'
+    'coreutils',
+    'util-linux'
 ]
 
 def close_killset(killset):
