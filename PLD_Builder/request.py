@@ -137,7 +137,7 @@ class Group:
         f.write(
             "<div id=\"%(no)d\" class=\"request %(flags)s\">\n"
             "<a href=\"#%(no)d\">%(no)d</a>. "
-            "<time class=\"timeago\" datetime=\"%(datetime)s\">%(time)s</time> "
+            "<time class=\"timeago\" title=\"%(datetime)s\" datetime=\"%(datetime)s\">%(time)s</time> "
             "from <b class=requester>%(requester)s</b> "
             "<small>%(id)s, prio=%(priority)d, jobs=%(max_jobs)d, %(flags)s</small>\n"
         % {
