@@ -189,17 +189,25 @@ autotag() {
 # get autotag for specs
 # WARNING: This may checkout some files from VCS
 get_autotag() {
-	local pkg spec rpmdir
+	local pkg spec rpmdir gitdir
 
-	rpmdir=$(rpm -E %_topdir)
+	rpmdir=$(rpm -E %_topdir 2> /dev/null)
 	for pkg in "$@"; do
-		cd $rpmdir
 		# strip branches
 		pkg=${pkg%:*}
 		# strip .spec extension
 		pkg=${pkg%.spec}
+
+		if [ -n "$rpmdir" ]; then
+			cd $rpmdir
+		else
+			gitdir=$(mktemp -d) || exit 1
+			cd $gitdir
+			git clone --depth=1 git://git.pld-linux.org/packages/$pkg
+		fi
+
 		# checkout only if missing
-		if [ ! -e $pkg/$pkg.spec ]; then
+		if [ ! -e $pkg/$pkg.spec -a -x $rpmdir/builder ]; then
 			$rpmdir/builder -g $pkg -ns -r HEAD 1>&2
 		fi
 		if [ ! -e $pkg/$pkg.spec ]; then
@@ -209,6 +217,8 @@ get_autotag() {
 			cd $pkg
 			autotag $pkg.spec
 		fi
+
+		[ -d "$gitdir" ] && rm -rf "$gitdir"
 	done
 }
 
