@@ -9,25 +9,25 @@ import subprocess
 import sys
 
 packages = collections.OrderedDict([
-    ('crash',                                 ['head', '4.14', '4.9', '4.4']),
-    ('dahdi-linux',                           ['head', '4.14', '4.9', '4.4']),
-    ('ipset',                                 ['head', '4.14', '4.9', '4.4']),
-    ('lin_tape',                              ['head', '4.14', '4.9', '4.4']),
-    ('linux-gpib',                            ['head', '4.14', '4.9', '4.4']),
-    ('lttng-modules',                         ['head', '4.14', '4.9', '4.4']),
-    ('r8168',                                 ['head', '4.14', '4.9', '4.4']),
-    ('rtl8812au',                             ['head', '4.14', '4.9', '4.4']),
-    ('sysdig',                                ['head', '4.14', '4.9', '4.4']),
-    ('tpm_emulator',                          ['head', '4.14', '4.9', '4.4']),
-    ('VirtualBox',                            ['head', '4.14', '4.9', '4.4']),
-    ('vpb-driver',                            ['head', '4.14', '4.9', '4.4']),
-    ('WireGuard',                             ['head', '4.14', '4.9', '4.4']),
-    ('wl',                                    ['head', '4.14', '4.9', '4.4']),
-    ('xorg-driver-video-nvidia',              ['head', '4.14', '4.9', '4.4']),
-    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '4.14', '4.9', '4.4']),
-    ('xorg-driver-video-nvidia-legacy-390xx', ['head', '4.14', '4.9', '4.4']),
-    ('zfs',                                   ['head', '4.14', '4.9', '4.4']),
-    ('xtables-addons',                        ['head']),
+    ('crash',                                 ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('dahdi-linux',                           ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('ipset',                                 ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('lin_tape',                              ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('linux-gpib',                            ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('lttng-modules',                         ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('r8168',                                 ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('rtl8812au',                             ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('sysdig',                                ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('tpm_emulator',                          ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('VirtualBox',                            ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('vpb-driver',                            ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('WireGuard',                             ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('wl',                                    ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('xorg-driver-video-nvidia',              ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('xorg-driver-video-nvidia-legacy-390xx', ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('zfs',                                   ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('xtables-addons',                        ['head', '4.19']),
     ('xtables-addons:XTADDONS_2',             ['4.14', '4.9', '4.4']),
     ('igb',                                   ['4.4']),
     ('ixgbe',                                 ['4.4']),
@@ -155,6 +155,9 @@ def main():
     parser.add_argument('-t', '--test-build',
             action='store_true',
             help='Perform a test-builds')
+    parser.add_argument('-bh', '--head',
+            action='store_true',
+            help='Perform build from head instead of last auto-tag')
     parser.add_argument('-v', '--verbose',
             action='store_true',
             help='Be verbose when running commands (default: %(default)s)')
@@ -213,12 +216,14 @@ def main():
             command = ("%s -nd %s -d %s --define 'build_kernels %s' --without userspace %s" %
                     (args.make_request, build_mode, args.dist, ','.join(kernels), spec))
         else:
-            tag = get_last_tag(name, spec, branch, dist=args.dist, verbose=args.verbose)
-            if not tag:
-                print "Failed getching last autotag for %s!" % pkg
-                continue
-            command = ("%s -nd %s -d %s --define 'build_kernels %s' --without userspace %s:%s" %
-                    (args.make_request, build_mode, args.dist, ','.join(kernels), spec, tag))
+            if not args.head:
+              tag = get_last_tag(name, spec, branch, dist=args.dist, verbose=args.verbose)
+              if not tag:
+                  print "Failed getching last autotag for %s!" % pkg
+                  continue
+              spec = '%s:%s' % (spec, tag)
+            command = ("%s -nd %s -d %s --define 'build_kernels %s' --without userspace %s" %
+                    (args.make_request, build_mode, args.dist, ','.join(kernels), spec))
         run_command(shlex.split(command), verbose=args.verbose, quiet=False)
 
     if args.nopae:
@@ -235,12 +240,14 @@ def main():
                 command = ("%s -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s" %
                         (args.make_request, build_mode, args.dist, spec))
             else:
-                tag = get_last_tag(name, spec, branch, dist=args.dist, verbose=args.verbose)
-                if not tag:
-                    print "Failed getching last autotag for %s!" % pkg
-                    continue
-                command = ("%s -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s:%s" %
-                        (args.make_request, build_mode, args.dist, spec, tag))
+                if not args.head:
+                    tag = get_last_tag(name, spec, branch, dist=args.dist, verbose=args.verbose)
+                    if not tag:
+                        print "Failed getching last autotag for %s!" % pkg
+                        continue
+                    spec = '%s:%s' % (spec, tag)
+                command = ("%s -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s" %
+                        (args.make_request, build_mode, args.dist, spec))
             run_command(shlex.split(command), verbose=args.verbose, quiet=False)
 
 if __name__ == "__main__":
