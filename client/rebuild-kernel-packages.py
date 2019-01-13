@@ -8,6 +8,8 @@ import shlex
 import subprocess
 import sys
 
+supported_kernels = ['head', 'nopae', '4.19', '4.14', '4.9', '4.4']
+
 packages = collections.OrderedDict([
     ('crash',                                 ['head', '4.19', '4.14', '4.9', '4.4']),
     ('dahdi-linux',                           ['head', '4.19', '4.14', '4.9', '4.4']),
@@ -178,7 +180,11 @@ def main():
 
     if not args.noinstall:
         source_packages = []
-        for ver in ['-','-nopae-','-4.14-','-4.9-','-4.4-']:
+        for kernel in supported_kernels:
+            if kernel == 'head':
+                ver = '-'
+            else:
+                ver = '-%s-' % kernel
             source_packages.extend(['kernel%sheaders' % ver, 'kernel%smodule-build' % ver])
         command = (('%(make_request)s -b %(dist)s-src -t -c '
                 '"poldek -n %(dist)s -n %(dist)s-ready -n %(dist)s-test --up ; '
