@@ -22,6 +22,7 @@ packages = collections.OrderedDict([
     ('sysdig',                                ['head', '4.19', '4.14', '4.9', '4.4']),
     ('tpm_emulator',                          ['head', '4.19', '4.14', '4.9', '4.4']),
     ('VirtualBox',                            ['head', '4.19', '4.14', '4.9', '4.4']),
+    ('VirtualBox:VIRTUALBOX_5_2',             ['head', '4.19', '4.14', '4.9', '4.4']),
     ('vpb-driver',                            ['head', '4.19', '4.14', '4.9', '4.4']),
     ('WireGuard',                             ['head', '4.19', '4.14', '4.9', '4.4']),
     ('wl',                                    ['head', '4.19', '4.14', '4.9', '4.4']),
