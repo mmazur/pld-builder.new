@@ -28,7 +28,7 @@ def get_keys(buf):
         log.error("gnupg run, does gpg binary exist? : %s" % e)
         raise
 
-    rx = re.compile("^gpg: Signature made .*using [DR]SA key ID (.+)")
+    rx = re.compile("^gpg:.*using\s[DR]SA\skey\s(?:ID\s)?(\w+)")
     keys = []
 
     for l in d_stderr.split('\n'):
