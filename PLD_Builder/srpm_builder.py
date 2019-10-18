@@ -24,7 +24,7 @@ import notify
 import status
 import build
 import report
-import messagebus
+#import messagebus
 
 from lock import lock
 from bqueue import B_Queue
