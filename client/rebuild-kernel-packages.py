@@ -8,31 +8,28 @@ import shlex
 import subprocess
 import sys
 
-supported_kernels = ['head', 'nopae', '5.4', '4.19', '4.14', '4.9', '4.4']
+supported_kernels = ['head', '5.4', '4.14', '4.9']
 
 packages = collections.OrderedDict([
-    ('crash',                                 ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('dahdi-linux',                           ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('ipset',                                 ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('lin_tape',                              ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('linux-gpib',                            ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('lttng-modules',                         ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('r8168',                                 ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('rtl8812au',                             ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('sysdig',                                ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('VirtualBox',                            ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('vpb-driver',                            ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('WireGuard',                             ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('wl',                                    ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('xorg-driver-video-nvidia',              ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('xorg-driver-video-nvidia-legacy-390xx', ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('zfs',                                   ['head', '5.4', '4.19', '4.14', '4.9', '4.4']),
-    ('xtables-addons',                        ['head', '5.4', '4.19']),
-    ('xtables-addons:XTADDONS_2',             ['4.14', '4.9', '4.4']),
-    ('igb',                                   ['4.4']),
-    ('ixgbe',                                 ['4.4']),
-    ('nvidiabl',                              ['4.4']),
+    ('crash',                                 ['head', '5.4', '4.14', '4.9']),
+    ('dahdi-linux',                           ['head', '5.4', '4.14', '4.9']),
+    ('ipset',                                 ['head', '5.4', '4.14', '4.9']),
+    ('lin_tape',                              ['head', '5.4', '4.14', '4.9']),
+    ('linux-gpib',                            ['head', '5.4', '4.14', '4.9']),
+    ('lttng-modules',                         ['head', '5.4', '4.14', '4.9']),
+    ('r8168',                                 ['head', '5.4', '4.14', '4.9']),
+    ('rtl8812au',                             ['head', '5.4', '4.14', '4.9']),
+    ('sysdig',                                ['head', '5.4', '4.14', '4.9']),
+    ('VirtualBox',                            ['head', '5.4', '4.14', '4.9']),
+    ('vpb-driver',                            ['head', '5.4', '4.14', '4.9']),
+    ('WireGuard',                             ['head', '5.4', '4.14', '4.9']),
+    ('wl',                                    ['head', '5.4', '4.14', '4.9']),
+    ('xorg-driver-video-nvidia',              ['head', '5.4', '4.14', '4.9']),
+    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '5.4', '4.14', '4.9']),
+    ('xorg-driver-video-nvidia-legacy-390xx', ['head', '5.4', '4.14', '4.9']),
+    ('zfs',                                   ['head', '5.4', '4.14', '4.9']),
+    ('xtables-addons',                        ['head', '5.4']),
+    ('xtables-addons:XTADDONS_2',             ['4.14', '4.9']),
 ])
 
 def get_rpmdir():
@@ -141,9 +138,6 @@ def main():
     parser.add_argument('-ni', '--noinstall',
             action='store_true',
             help='skip installing new kernel packages on src builder (default: %(default)s)')
-    parser.add_argument('-n', '--nopae',
-            action='store_true',
-            help='Build packages for nopae kernel for i686 (default: %(default)s)')
     parser.add_argument('-p', '--packages',
             type=csv_list,
             default=packages.keys(),
@@ -230,30 +224,6 @@ def main():
             command = ("%s -nd %s -d %s --define 'build_kernels %s' --without userspace %s" %
                     (args.make_request, build_mode, args.dist, ','.join(kernels), spec))
         run_command(shlex.split(command), verbose=args.verbose, quiet=False)
-
-    if args.nopae:
-        for pkg, kernels in packages.iteritems():
-            try:
-                name, spec, branch = clean_pkgname(pkg)
-            except NameError:
-                continue
-            if not pkg in args.packages:
-                continue
-            if not 'head' in kernels:
-                continue
-            if args.test_build:
-                command = ("%s -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s" %
-                        (args.make_request, build_mode, args.dist, spec))
-            else:
-                if not args.head:
-                    tag = get_last_tag(name, spec, branch, dist=args.dist, verbose=args.verbose)
-                    if not tag:
-                        print "Failed getching last autotag for %s!" % pkg
-                        continue
-                    spec = '%s:%s' % (spec, tag)
-                command = ("%s -nd %s -d %s -b th-i686 --define 'build_kernels nopae' --kernel nopae --without userspace %s" %
-                        (args.make_request, build_mode, args.dist, spec))
-            run_command(shlex.split(command), verbose=args.verbose, quiet=False)
 
 if __name__ == "__main__":
     main()
