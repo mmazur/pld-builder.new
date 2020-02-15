@@ -8,27 +8,27 @@ import shlex
 import subprocess
 import sys
 
-supported_kernels = ['head', '5.4', '4.14', '4.9']
+supported_kernels = ['head', '5.4', '4.19', '4.14', '4.9']
 
 packages = collections.OrderedDict([
-    ('crash',                                 ['head', '5.4', '4.14', '4.9']),
-    ('dahdi-linux',                           ['head', '5.4', '4.14', '4.9']),
-    ('ipset',                                 ['head', '5.4', '4.14', '4.9']),
-    ('lin_tape',                              ['head', '5.4', '4.14', '4.9']),
-    ('linux-gpib',                            ['head', '5.4', '4.14', '4.9']),
-    ('lttng-modules',                         ['head', '5.4', '4.14', '4.9']),
-    ('r8168',                                 ['head', '5.4', '4.14', '4.9']),
-    ('rtl8812au',                             ['head', '5.4', '4.14', '4.9']),
-    ('sysdig',                                ['head', '5.4', '4.14', '4.9']),
-    ('VirtualBox',                            ['head', '5.4', '4.14', '4.9']),
-    ('vpb-driver',                            ['head', '5.4', '4.14', '4.9']),
-    ('WireGuard',                             ['head', '5.4', '4.14', '4.9']),
-    ('wl',                                    ['head', '5.4', '4.14', '4.9']),
-    ('xorg-driver-video-nvidia',              ['head', '5.4', '4.14', '4.9']),
-    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '5.4', '4.14', '4.9']),
-    ('xorg-driver-video-nvidia-legacy-390xx', ['head', '5.4', '4.14', '4.9']),
-    ('zfs',                                   ['head', '5.4', '4.14', '4.9']),
-    ('xtables-addons',                        ['head', '5.4']),
+    ('crash',                                 ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('dahdi-linux',                           ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('ipset',                                 ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('lin_tape',                              ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('linux-gpib',                            ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('lttng-modules',                         ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('r8168',                                 ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('rtl8812au',                             ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('sysdig',                                ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('VirtualBox',                            ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('vpb-driver',                            ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('WireGuard',                             ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('wl',                                    ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('xorg-driver-video-nvidia',              ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('xorg-driver-video-nvidia-legacy-390xx', ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('zfs',                                   ['head', '5.4', '4.19', '4.14', '4.9']),
+    ('xtables-addons',                        ['head', '5.4', '4.19']),
     ('xtables-addons:XTADDONS_2',             ['4.14', '4.9']),
 ])
 
