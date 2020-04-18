@@ -180,7 +180,7 @@ def main():
             source_packages.extend(['kernel%sheaders' % ver, 'kernel%smodule-build' % ver])
         command = (('%(make_request)s -b %(dist)s-src -t -c '
                 '"poldek -n %(dist)s -n %(dist)s-ready -n %(dist)s-test --up ; '
-                'poldek -uGv %(source_packages)s"') %
+                'poldek -uvg %(source_packages)s"') %
                 {'make_request': args.make_request,
                     'dist': args.dist,
                     'source_packages': ' '.join(source_packages)})
