@@ -20,7 +20,7 @@ case "$suffix" in
 		request "$@"
 	done
 	;;
-7*)
+7)
 	for php in $dir/php7?.sh; do
 		suffix=${php#$dir/php}
 		suffix=${suffix%.sh}
