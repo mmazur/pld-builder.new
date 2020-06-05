@@ -23,7 +23,6 @@ packages = collections.OrderedDict([
     ('vpb-driver',                            ['head', '5.4', '4.19', '4.14', '4.9']),
     ('wl',                                    ['head', '5.4', '4.19', '4.14', '4.9']),
     ('xorg-driver-video-nvidia',              ['head', '5.4', '4.19', '4.14', '4.9']),
-    ('xorg-driver-video-nvidia-legacy-340xx', ['head', '5.4', '4.19', '4.14', '4.9']),
     ('xorg-driver-video-nvidia-legacy-390xx', ['head', '5.4', '4.19', '4.14', '4.9']),
     ('zfs',                                   ['head', '5.4', '4.19', '4.14', '4.9']),
     ('xtables-addons',                        ['head', '5.4', '4.19']),
