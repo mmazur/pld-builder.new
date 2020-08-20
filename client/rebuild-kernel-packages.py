@@ -11,7 +11,6 @@ import sys
 supported_kernels = ['head', '5.4', '4.19', '4.14', '4.9']
 
 packages = collections.OrderedDict([
-    ('crash',                                 ['head', '5.4', '4.19', '4.14', '4.9']),
     ('dahdi-linux',                           ['head', '5.4', '4.19', '4.14', '4.9']),
     ('ipset',                                 ['head', '5.4', '4.19', '4.14', '4.9']),
     ('lin_tape',                              ['head', '5.4', '4.19', '4.14', '4.9']),
@@ -27,6 +26,7 @@ packages = collections.OrderedDict([
     ('zfs',                                   ['head', '5.4', '4.19', '4.14', '4.9']),
     ('xtables-addons',                        ['head', '5.4', '4.19']),
     ('xtables-addons:XTADDONS_2',             ['4.14', '4.9']),
+    ('crash',                                 ['5.4', '4.19', '4.14', '4.9']),
     ('WireGuard',                             ['5.4', '4.19', '4.14', '4.9']),
 ])
 
