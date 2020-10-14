@@ -409,7 +409,7 @@ class Batch:
 
     def php_ignores(self, php_version):
         # available php versions in distro
-        php_versions = ['4', '5.2', '5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4']
+        php_versions = ['4', '5.2', '5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
 
         # remove current php version
         try:
