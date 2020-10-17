@@ -1,5 +1,7 @@
 # vi: encoding=utf-8 ts=8 sts=4 sw=4 et
 
+from __future__ import print_function
+
 import sys
 import os
 import atexit
@@ -115,13 +117,13 @@ def fetch_src(r, b):
                 continue
             else:
                 try:
-                    print "error.errno: %s" % str(error.errno)
+                    print("error.errno: %s" % str(error.errno))
                 except Exception, e:
-                    print "error.errno: exception %s" % e
+                    print("error.errno: exception %s" % e)
                 try:
-                    print "error.reason %s" % str(error.reason)
+                    print("error.reason %s" % str(error.reason))
                 except Exception, e:
-                    print "error.reason exception %s" % e
+                    print("error.reason exception %s" % e)
                 raise
 
     o = chroot.popen("cat > %s" % b.src_rpm, mode = "w")

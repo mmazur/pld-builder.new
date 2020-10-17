@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from __future__ import print_function
+
 import argparse
 import collections
 import os
@@ -55,14 +57,14 @@ def run_command(command, verbose=False, quiet=True):
     gitproc.wait()
     out = gitproc.stdout.read().strip("\n'")
     if verbose:
-        print ' '.join(command)
+        print(' '.join(command))
     if not quiet:
-        print out
+        print(out)
     if gitproc.returncode != 0:
         if quiet:
-            print out
-        print '\nError running command: \n'
-        print ' '.join(command)
+            print(out)
+        print('\nError running command: \n')
+        print(' '.join(command))
         return (False, None)
     return (True, out)
 
@@ -100,7 +102,7 @@ def fetch_package(name, spec, branch, verbose=False):
         rev_branch = run_command(["/usr/bin/git", "-C", gitdir, "rev-parse", branch], verbose=verbose)
         rev_head = run_command(["/usr/bin/git", "-C", gitdir, "rev-parse", "HEAD"], verbose=verbose)
         if rev_branch[1] != rev_head[1]:
-            print "Error: cannot checkout " + name
+            print("Error: cannot checkout " + name)
             return None
         run_command(["/usr/bin/git", "-C", gitdir, "merge", "--ff-only", "@{upstream}"], verbose=verbose)
 
@@ -186,7 +188,7 @@ def main():
         run_command(shlex.split(command), verbose=args.verbose, quiet=False)
         raw_input('\nPress Enter after src builder updates kernel packages...')
 
-    print '\nCurrent kernels versions:'
+    print('\nCurrent kernels versions:')
     all_kernels = set()
     for kernel_list in packages.values():
         all_kernels.update(kernel_list)
@@ -196,7 +198,7 @@ def main():
         branch = 'master'
         if kernel != 'head':
             branch = 'LINUX_%s' % kernel.replace('.','_')
-        print '%s: %s' % (kernel, get_last_tag('kernel', 'kernel.spec', branch, dist=args.dist, kernel=kernel, verbose=args.verbose))
+        print('%s: %s' % (kernel, get_last_tag('kernel', 'kernel.spec', branch, dist=args.dist, kernel=kernel, verbose=args.verbose)))
 
     for pkg, kernels in packages.iteritems():
         try:
@@ -216,7 +218,7 @@ def main():
             if not args.head:
               tag = get_last_tag(name, spec, branch, dist=args.dist, verbose=args.verbose)
               if not tag:
-                  print "Failed getching last autotag for %s!" % pkg
+                  print("Failed getching last autotag for %s!" % pkg)
                   continue
               spec = '%s:%s' % (spec, tag)
             command = ("%s -nd %s -d %s --define 'build_kernels %s' --without userspace %s" %

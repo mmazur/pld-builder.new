@@ -1,5 +1,7 @@
 # vi: encoding=utf-8 ts=8 sts=4 sw=4 et
 
+from __future__ import print_function
+
 import re
 import string
 import xreadlines
@@ -100,4 +102,4 @@ def get_build_requires(spec, bconds_with, bconds_without):
                     msg("spec error (%s): %s\n" % (spec, l))
 
     for x in build_req:
-        print x
+        print(x)
