@@ -200,7 +200,7 @@ def main():
             branch = 'LINUX_%s' % kernel.replace('.','_')
         print('%s: %s' % (kernel, get_last_tag('kernel', 'kernel.spec', branch, dist=args.dist, kernel=kernel, verbose=args.verbose)))
 
-    for pkg, kernels in packages.iteritems():
+    for pkg, kernels in packages.items():
         try:
             name, spec, branch = clean_pkgname(pkg)
         except NameError:
